@@ -1,0 +1,87 @@
+'scopeName': 'source.zelus'
+'name': 'Zelus'
+'fileTypes': ['zls', 'zli']
+
+'patterns': [
+  { # numeric constants
+    'match': '\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))\\b'
+    'name': 'constant.numeric.zelus'
+  },
+
+  { # boolean constants
+    'match': '\\b(true|false)\\b'
+    'name': 'constant.language.zelus'
+  }
+
+  { # operators
+    'match': '(\\blast\\b|\\bpre\\b|->|\\bfby\\b|\\&|\\|\\||\\bor\\b|=|\\*)'
+    'name': 'keyword.operator.zelus'
+  }
+
+  { # function declaration
+    'match': '\\b(let)\\s+(node|fun|hybrid)?\\s+(\\w+)\\s*(.*)\\s*=(\\s*.*\\s+(where))?\\b'
+    'captures':
+        '1':
+            'name': 'keyword.control.zelus'
+        '2':
+            'name': 'keyword.control.zelus'
+        '3':
+            'name': 'entity.name.function.zelus'
+        '6':
+            'name': 'keyword.control.zelus'
+    'name': 'meta.function.zelus'
+  }
+
+  { # let binding
+    'match': '\\b(let)\\s+(\\w+)\\s*='
+    'captures':
+        '1':
+            'name': 'keyword.control.zelus'
+        '2':
+            'name': 'entity.name.function.zelus'
+    'name': 'meta.binding.zelus'
+  }
+
+  { # single quote strings
+    'begin': '\''
+    'beginCaptures':
+        '0':
+            'name': 'punctuation.definition.string.begin.zelus'
+    'end': '\''
+    'endCaptures':
+        '0':
+            'name': 'punctuation.definition.string.end.zelus'
+    'name': 'string.quoted.single.zelus'
+    'patterns': [
+      {
+          'match': '\\\\.'
+          'name': 'constant.character.escape.zelus'
+      }
+    ]
+  }
+
+  { # double quote strings
+    'begin': '"'
+    'beginCaptures':
+        '0':
+            'name': 'punctuation.definition.string.begin.zelus'
+    'end': '"'
+    'endCaptures':
+        '0':
+            'name': 'punctuation.definition.string.end.zelus'
+    'name': 'string.quoted.double.zelus'
+    'patterns': [
+      {
+          'match': '\\\\.'
+          'name': 'constant.character.escape.zelus'
+      }
+    ]
+  }
+
+  { # comments
+    'begin': '\\(\\*'
+    'end': '\\*\\)'
+    'name': 'comment.block.zelus'
+  }
+
+]
