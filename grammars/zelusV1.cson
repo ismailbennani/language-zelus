@@ -1,0 +1,233 @@
+'scopeName': 'source.zelus'
+'name': 'ZelusV1'
+'fileTypes': ['zls', 'zli']
+
+'patterns': [
+  { 'include': '#keywords' }
+  { 'include': '#module_names' }
+  { 'include': '#sumtype_names' }
+  { 'include': '#operators' }
+  { 'include': '#comment' }
+  { 'include': '#single_string' }
+  { 'include': '#double_string' }
+  { 'include': '#numeric_constant' }
+  { 'include': '#boolean_constant' }
+  {
+    'match': '^(open)\\s*(\\w+)$'
+    'captures':
+        '1':
+            'name': 'keyword.control.zelus'
+        '2':
+            'name': 'entity.other.inherited-class.zelus'
+    'name': 'meta.import.zelus'
+  }
+  { # let binding
+    'begin': '\\b(let)\\s*(discrete|node|hybrid|fun)\\s*(\\w+)'
+    'beginCaptures':
+        '1':
+            'name': 'keyword.control.zelus'
+        '2':
+            'name': 'keyword.control.zelus'
+        '3':
+            'name': 'entity.name.function.zelus'
+    'end': '(?=\\()'
+    'name': 'meta.fun_definition.zelus'
+  }
+  { # let [rec|init|der] [(]a[,b*][)] =
+    'begin': '\\b(let)\\b'
+    'beginCaptures':
+        '1':
+            'name': 'keyword.control.zelus'
+        '2':
+            'name': 'entity.name.function.zelus'
+    'end': '(?=(=|automaton))'
+    'name': 'meta.binding.zelus'
+    'patterns': [
+      {
+        'match': '\\b(rec|init|der)\\b'
+        'name': 'keyword.control.zelus'
+      }
+      {
+        'match': '(\\(?\\s*\\w+(\\s*,\\s*\\w+)*\\s*\\)?)\\s*(?=(=|$))'
+        'name': 'entity.name.function.zelus'
+      }
+      { 'include': '#keywords' }
+      { 'include': '#operators' }
+    ]
+  }
+  { # (where|and) [let|rec|and|init|der]* a(,b)* =
+    'begin': '\\b(where|and(?!\\s*automaton))\\b'
+    'beginCaptures':
+        '1':
+            'name': 'keyword.control.zelus'
+    'end': '(?:=)'
+    'endCaptures':
+        '1':
+            'name': 'punctuation.definition.zelus'
+    'name': 'meta.fun_body.begin.zelus'
+    'patterns': [
+      {
+        'match': '\\b(let|rec|init|der)\\b'
+        'name': 'keyword.control.zelus'
+      }
+      {
+        'match': '(\\(?\\s*\\w+(\\s*,\\s*\\w+)*\\s*\\)?)\\s*(?=($|=))'
+        'name': 'entity.name.function.zelus'
+      }
+      { 'include': '#keywords' }
+      { 'include': '#operators' }
+      { 'include': '#comment' }
+    ]
+  }
+  { # do [let|init|der|rec] a(,b)* =
+    'begin': '\\b(do)\\b'
+    'beginCaptures':
+        '1':
+            'name': 'keyword.control.zelus'
+    'end': '\\b(?==)\\b'
+    'endCaptures':
+        '1':
+          'name': 'punctuation.definition.binding.zelus'
+    'name': 'meta.fun_body.begin.zelus'
+    'patterns': [
+      {
+        'match': '\\b(let|rec|init|der)\\b'
+        'name': 'keyword.control.zelus'
+      }
+      {
+        'match': '\\(?\\s*(\\w+(\\s*,\\s*\\w+)*)*\\s*\\)?\\s*(?==)'
+        'name': 'entity.name.function.zelus'
+      }
+      { 'include': '#keywords' }
+      { 'include': '#operators' }
+      { 'include': '#comment' }
+    ]
+  }
+  { # | Sumtype ->
+    'begin': '\\|'
+    'end': '->'
+    'patterns': [
+        { 'include': '#sumtype_names' }
+    ]
+  }
+  { # val
+    'begin': '^(val)\\b'
+    'beginCaptures':
+        '1':
+          'name': 'keyword.control.zelus'
+    'end': '(?=(val|type|let))'
+    'name': 'meta.definition.entity.zelus'
+    'patterns': [
+      {
+        'match': '(\\w+)\\s*(?=:)'
+        'captures':
+            '1':
+                'name': 'entity.name.function.zelus'
+      }
+      {
+        'match': ':\\s*((\'\\w)?[\\w\\s]+)'
+        'captures':
+            '1':
+                'name': 'entity.name.type.zelus'
+        'name': 'meta.definition.type.zelus'
+      }
+      {
+        'match': '(?:\\*|(?:-(?:\\w)?->))\\s*((\'\\w)?[\\w\\s]+)'
+        'captures':
+            '1':
+                'name': 'entity.name.type.zelus'
+        'name': 'meta.definition.type.zelus'
+      }
+      { 'include': '#comment' }
+    ]
+  }
+  { # type
+    'begin': '^(type)\\b'
+    'beginCaptures':
+        '1':
+          'name': 'keyword.control.zelus'
+    'end': '(?=(val|type|let))'
+    'name': 'meta.definition.type.zelus'
+    'patterns': [
+      {
+        'match': '(\'\\w+\\s*)*(\\w+)\\s*(=|;)?'
+        'captures':
+            '1':
+                'name': 'entity.name.tag.zelus'
+            '2':
+                'name': 'entity.name.type.zelus'
+      }
+      {
+        'match': '((\'\\w)?[\\w\\s]+)\\s*(\\*|(-(\\w)?->))?'
+        'captures':
+            '1':
+                'name': 'entity.name.type.zelus'
+        'name': 'meta.definition.type.zelus'
+      }
+      { 'include': '#comment' }
+    ]
+  }
+]
+
+'repository':
+  'escaped_char':
+      'match': '\\\\.'
+      'name': 'constant.character.escape.zelus'
+  'comment':
+      'begin': '\\(\\*'
+      'beginCaptures':
+          '0':
+              'name': 'punctuation.definition.comment.begin.zelus'
+      'end': '\\*\\)'
+      'endCaptures':
+          '0':
+              'name': 'punctuation.definition.comment.end.zelus'
+      'name': 'comment.block.zelus'
+  'single_string':
+      'begin': '\''
+      'beginCaptures':
+          '0':
+              'name': 'punctuation.definition.string.begin.zelus'
+      'end': '\''
+      'endCaptures':
+          '0':
+              'name': 'punctuation.definition.string.end.zelus'
+      'name': 'string.quoted.single.zelus'
+      'patterns': [
+        {
+            'include': '#escaped_char'
+        }
+      ]
+  'double_string':
+      'begin': '"'
+      'beginCaptures':
+          '0':
+              'name': 'punctuation.definition.string.begin.zelus'
+      'end': '"'
+      'endCaptures':
+          '0':
+              'name': 'punctuation.definition.string.end.zelus'
+      'name': 'string.quoted.double.zelus'
+      'patterns': [
+        {
+            'include': '#escaped_char'
+        }
+      ]
+  'numeric_constant':
+      'match': '\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))\\b'
+      'name': 'constant.numeric.zelus'
+  'boolean_constant':
+      'match': '\\b(true|false)\\b'
+      'name': 'constant.language.zelus'
+  'operators':
+      'match': '(\\bnot\\b|\\bor\\b|\\&|\\|{2})'
+      'name': 'variable.language.zelus'
+  'keywords':
+      'match': '\\b(in|last|pre|fby|next|init|reset|present|if|then|else|until|unless|up|on|(and\\s*)?automaton|emit|done)\\b'
+      'name': 'keyword.control.zelus'
+  'module_names':
+      'match': '\\b[A-Z]\\w*(?=\\.)'
+      'name': 'entity.name.type.zelus'
+  'sumtype_names':
+      'match': '\\b[A-Z]\\w*(?!\\.)'
+      'name': 'entity.name.type.zelus'
