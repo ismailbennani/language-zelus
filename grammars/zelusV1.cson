@@ -38,7 +38,7 @@
         'name': 'meta.name.function.zelus'
       }
       {
-        'match': '\\b(rec|init|der)\\b'
+        'match': '\\b(let|rec|init|der)\\b'
         'name': 'keyword.control.zelus'
       }
       {
@@ -54,7 +54,7 @@
     'beginCaptures':
         '1':
             'name': 'keyword.control.zelus'
-    'end': '(?=(\\s*(=|automaton|emit)))'
+    'end': '(?=(\\s*(=|automaton|emit|;)))'
     'name': 'meta.fun_body.begin.zelus'
     'patterns': [
       {
@@ -75,7 +75,7 @@
     'beginCaptures':
         '1':
             'name': 'keyword.control.zelus'
-    'end': '\\b(?=(\\s*(=|automaton|until|in|unless)))\\b'
+    'end': '\\b(?=(\\s*(=|automaton|until|in|unless|;|do|if)))\\b'
     'endCaptures':
         '1':
           'name': 'punctuation.definition.binding.zelus'
@@ -90,8 +90,13 @@
         'name': 'entity.name.function.zelus'
       }
       { 'include': '#keywords' }
+      { 'include': '#module_names' }
+      { 'include': '#sumtype_names' }
       { 'include': '#operators' }
       { 'include': '#comment' }
+      { 'include': '#double_string' }
+      { 'include': '#numeric_constant' }
+      { 'include': '#boolean_constant' }
     ]
   }
   { # | Sumtype ->
