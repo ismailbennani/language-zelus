@@ -1,0 +1,172 @@
+name: 'Zelus'
+scopeName: 'zelus'
+type: 'tree-sitter'
+parser: 'tree-sitter-zelus'
+fileTypes: ["zls", "zli"]
+
+comments:
+  start: '(* '
+  end: ' *)'
+
+
+folds: [
+  {
+    type: 'comment'
+  }
+  {
+    start: {index: 0, type: '{'}
+    end: {index: -1, type: '}'}
+  }
+  {
+    start: {index: 0, type: '['}
+    end: {index: -1, type: ']'}
+  }
+  {
+    start: {index: 0, type: '('}
+    end: {index: -1, type: ')'}
+  }
+  {
+    type: 'if_expression',
+    start: {type: 'kwd_then'},
+    end: {type: 'else_expression'}
+  }
+  {
+    type: 'else_expression',
+    start: {type: 'kwd_else'},
+  }
+  {
+    type: 'let_expression',
+    start: {type: 'kwd_let'},
+    end: {type: 'kwd_in'}
+  }
+  {
+    type: 'reset_expression',
+    start: {type: 'kwd_reset'},
+    end: {type: 'kwd_every'}
+  }
+  {
+    type: 'automaton_expression',
+    start: {type: 'kwd_automaton'},
+    end: {type: 'kwd_init'}
+  }
+  {
+    type: 'match_expression',
+    start: {type: 'kwd_match'},
+    end: {type: 'kwd_end'}
+  }
+  {
+    type: 'present_expression',
+    start: {type: 'kwd_present'},
+    end: {type: ['kwd_else', 'kwd_end']}
+  }
+  {
+    type: 'forall_equation',
+    start: {type: 'kwd_forall'},
+    end: {type: 'kwd_done'}
+  }
+  {
+    type: 'automaton_equation',
+    start: {type: 'kwd_automaton'},
+    end: {type: ['kwd_init', 'kwd_end']}
+  }
+  {
+    type: 'match_equation',
+    start: {type: 'kwd_match'},
+    end: {type: 'kwd_end'}
+  }
+  {
+    type: 'present_equation',
+    start: {type: 'kwd_present'},
+    end: {type: ['kwd_else', 'kwd_end']}
+  }
+  {
+    type: 'if_equation',
+    start: {type: 'kwd_then'},
+    end: {type: 'else_equation'}
+  }
+  {
+    type: 'else_equation',
+    start: {type: 'kwd_else'},
+  }
+  {
+    type: 'reset_equation',
+    start: {type: 'kwd_reset'},
+    end: {type: 'kwd_every'}
+  }
+  {
+    start: {type: 'kwd_do'},
+    end: {type: ['kwd_done', 'kwd_then', 'kwd_continue', 'kwd_in']}
+  }
+  {
+    type: 'local_list',
+    start: {type: 'kwd_local'},
+    end: {type: 'kwd_in'}
+  }
+  {
+    type: 'let_list',
+    start: {type: 'kwd_let'},
+    end: {type: 'kwd_in'}
+  }
+]
+
+scopes:
+  'comment': 'comment.block.zelus'
+
+  'integer': 'constant.numeric.zelus'
+  'float'  : 'constant.numeric.zelus'
+  'string' : 'constant.zelus'
+  'char'   : 'constant.character.zelus'
+  'bool'   : 'constant.language.boolean.zelus'
+
+  'kind': 'constant.language.kind.zelus'
+  'arrow': 'storage.type'
+
+  'constructor': 'entity.other.inherited-class.zelus'
+  'type_var'   : 'entity.name.tag.zelus'
+  'identifier' : 'variable.other.zelus'
+  'fun_name'   : 'entity.name.function.zelus'
+  'ty_name'   : 'entity.name.type.zelus'
+
+  'prfx'     : 'keyword.operator.prefix.zelus'
+  'infx'     : 'keyword.operator.infix.zelus'
+  'kwd_next' : 'keyword.operator.prefix.zelus'
+  'kwd_last' : 'keyword.operator.prefix.zelus'
+  'kwd_emit' : 'keyword.operator.prefix.zelus'
+  'kwd_up'   : 'keyword.operator.prefix.zelus'
+
+  'kwd_open'       : 'keyword.control'
+  'kwd_type'       : 'keyword.control'
+  'kwd_val'        : 'keyword.control'
+  'kwd_let'        : 'keyword.control'
+  'kwd_rec'        : 'keyword.control'
+  'kwd_in'         : 'keyword.control'
+  'kwd_out'         : 'keyword.control'
+  'kwd_on'         : 'keyword.control'
+  'kwd_as'         : 'keyword.control'
+  'kwd_of'         : 'keyword.control'
+  'kwd_and'        : 'keyword.control'
+  'kwd_static'     : 'keyword.control'
+  'kwd_atomic'     : 'keyword.control'
+  'kwd_where'      : 'keyword.control'
+  'kwd_der'        : 'keyword.control'
+  'kwd_init'       : 'keyword.control'
+  'kwd_default'    : 'keyword.control'
+  'kwd_reset'      : 'keyword.control'
+  'kwd_every'      : 'keyword.control'
+  'kwd_present'    : 'keyword.control'
+  'kwd_period'     : 'keyword.control'
+  'kwd_local'      : 'keyword.control'
+  'kwd_do'         : 'keyword.control'
+  'kwd_done'       : 'keyword.control'
+  'kwd_forall'     : 'keyword.control'
+  'kwd_initialize' : 'keyword.control'
+  'kwd_match'      : 'keyword.control'
+  'kwd_with'       : 'keyword.control'
+  'kwd_end'        : 'keyword.control'
+  'kwd_automaton'  : 'keyword.control'
+  'kwd_then'       : 'keyword.control'
+  'kwd_continue'   : 'keyword.control'
+  'kwd_until'      : 'keyword.control'
+  'kwd_unless'     : 'keyword.control'
+  'kwd_if'         : 'keyword.control'
+  'kwd_else'       : 'keyword.control'

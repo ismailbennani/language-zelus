@@ -1,4 +1,0 @@
-'.source.zelus':
-  'editor':
-    'commentStart': '(* '
-    'commentEnd': ' *)'

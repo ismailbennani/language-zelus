@@ -3,9 +3,9 @@
   "version": "0.1.3",
   "description": "Zelus language support in Atom",
   "engines": {
-    "atom": "*"
+    "atom": "*",
+    "node": "*"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git@github.com:ismailbennani/language-zelus.git"
@@ -13,5 +13,14 @@
   "bugs": {
     "url": "https://github.com/ismailbennani/language-zelus/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "tree-sitter"
+  ],
+  "dependencies": {
+    "tree-sitter-zelus": "^1.0.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.13.5"
+  }
 }
