@@ -61,18 +61,19 @@ folds: [
   }
   {
     type: 'forall_equation',
-    start: {type: '"do"'},
-    end: {type: '"done"'}
   }
   {
     type: 'automaton_equation',
-    start: {type: '"automaton"'},
-    end: {type: ['"init"', '"end"']}
+    start: {index: 0, type: '"automaton"'},
+    end: {type: '"init"'}
+  }
+  {
+    type: 'automaton_equation',
+    start: {index: 0, type: '"automaton"'}
   }
   {
     type: 'match_equation',
-    start: {type: '"match"'},
-    end: {type: '"end"'}
+    start: {index: 0, type: '"match"'}
   }
   {
     type: 'present_equation',
@@ -81,103 +82,214 @@ folds: [
   }
   {
     type: 'if_equation',
-    start: {type: '"then"'},
-    end: {type: 'else_equation'}
   }
   {
     type: 'else_equation',
-    start: {type: '"else"'},
   }
   {
     type: 'reset_equation',
-    start: {type: '"reset"'},
+    start: {index: 0, type: '"reset"'},
     end: {type: '"every"'}
   }
   {
-    type: 'let_declaration',
-    start: {type: '"="'},
+    type: [
+      'eq_equation',
+      'der_equation',
+      'next_equation',
+      'init_equation',
+      'emit_equation',
+      'period_equation',
+      'last_equation',
+      'let_declaration'
+    ],
+    start: {type: '"="'}
+  }
+  {
+    type: [
+      'automaton_handler_equation',
+      'automaton_handler_expression',
+      'match_handler_equation',
+      'match_handler_expression',
+      'present_handler_equation',
+      'present_handler_expression',
+      'der_reset_handler'
+    ],
+    start: {type: '"->"'}
+  }
+  {
+    type: [
+      'do_done_block'
+      'block_equation',
+      'block_expression',
+      'block_optional_equation'
+    ],
+    start: {index: 0, type: '"do"'}
   }
   {
     type: 'fun_declaration',
     start: {type: ['"where"', '"="']},
   }
   {
-    start: {type: '"do"'},
-    end: {type: ['"done"', '"then"', '"continue"', '"in"', '"until"', '"unless"']}
+    type: 'val_declaration',
+    start: {type: ['":"']},
   }
   {
-    start: {type: ['"until"', '"unless"', '"else"']},
+    start: {index: 0, type: ['"until"', '"unless"', '"else"']},
     end: {type: ['"then"', '"continue"']}
   }
   {
-    type: 'local_list',
-    start: {type: '"local"'},
-    end: {type: '"in"'}
+    type: 'one_local',
   }
   {
-    type: 'let_list',
+    type: 'one_let',
     start: {type: '"="'},
     end: {type: '"in"'}
   }
 ]
 
 scopes:
+  'ERROR': 'markup.underline.zelus' # debug tree-sitter-zelus
+
   'comment': 'comment.block.zelus'
 
   'integer': 'constant.numeric.zelus'
   'float'  : 'constant.numeric.zelus'
   'string' : 'string.quoted.double.zelus'
-  'string > escaped_sequence': 'string.quoted.other.zelus'
+  'string > escape_sequence': 'constant.character.escape.zelus'
   'char'   : 'string.quoted.single.zelus'
   'bool'   : 'constant.language.boolean.zelus'
 
   'kind': 'keyword.control.zelus'
   'arrow': 'meta.arrow.zelus'
 
-  'constructor': 'entity.name.type.variant.zelus'
+  'constructor': 'meta.class.zelus' # 'entity.name.type.variant.zelus'
   'type_var'   : 'storage.type.zelus'
   'identifier' : 'meta.identifier.zelus'
   'fun_name'   : 'entity.name.function.zelus'
   'ty_name'    : 'storage.type.zelus'
 
-  "present_expression"  : "meta.present_expression.zelus"
-  "match_expression"    : "meta.match_expression.zelus"
-  "automaton_expression": "meta.automaton_expression.zelus"
-  "reset_expression"    : "meta.reset_expression.zelus"
-  "let_expression"      : "meta.let_expression.zelus"
-  "else_expression"     : "meta.else_expression.zelus"
-  "if_expression"       : "meta.if_expression.zelus"
-  "do_equation"         : "meta.do_equation.zelus"
-  "reset_equation"      : "meta.reset_equation.zelus"
-  "present_equation"    : "meta.present_equation.zelus"
-  "else_equation"       : "meta.else_equation.zelus"
-  "if_equation"         : "meta.if_equation.zelus"
-  "match_equation"      : "meta.match_equation.zelus"
-  "automaton_equation"  : "meta.automaton_equation.zelus"
-  "forall_equation"     : "meta.forall_equation.zelus"
-  "eq_equation"         : "meta.eq_equation.zelus"
-  "period_equation"     : "meta.period_equation.zelus"
-  "der_equation"        : "meta.der_equation.zelus"
-  "next_equation"       : "meta.next_equation.zelus"
-  "init_equation"       : "meta.init_equation.zelus"
-  "emit_equation"       : "meta.emit_equation.zelus"
-  "let_declaration"     : "meta.let_declaration.zelus"
-  "fun_declaration"     : "meta.fun_declaration.zelus"
-  "val_declaration"     : "meta.val_declaration.zelus"
+  'label_expr'                  : 'meta.label_expr.zelus'
+  'present_expression'          : 'meta.present_expression.zelus'
+  'match_expression'            : 'meta.match_expression.zelus'
+  'automaton_expression'        : 'meta.automaton_expression.zelus'
+  'reset_expression'            : 'meta.reset_expression.zelus'
+  'every_expression'            : 'meta.every_expression.zelus'
+  'let_expression'              : 'meta.let_expression.zelus'
+  'else_expression'             : 'meta.else_expression.zelus'
+  'if_expression'               : 'meta.if_expression.zelus'
+  'application_expression'      : 'meta.application_expression.zelus'
+  'update_expression'           : 'meta.update_expression.zelus'
+  'record_access_expression'    : 'meta.record_access_expression.zelus'
+  'tuple_expression'            : 'meta.tuple_expression.zelus'
+  'slice_expression'            : 'meta.slice_expression.zelus'
+  'concat_expression'           : 'meta.concat_expression.zelus'
+  'access_expression'           : 'meta.access_expression.zelus'
+  'do_in_expression'            : 'meta.do_in_expression.zelus'
+  'period_expression'           : 'meta.period_expression.zelus'
+  'last_expression'             : 'meta.last_expression.zelus'
+  'reset_equation'              : 'meta.reset_equation.zelus'
+  'present_equation'            : 'meta.present_equation.zelus'
+  'else_equation'               : 'meta.else_equation.zelus'
+  'if_equation'                 : 'meta.if_equation.zelus'
+  'match_equation'              : 'meta.match_equation.zelus'
+  'automaton_equation'          : 'meta.automaton_equation.zelus'
+  'forall_equation'             : 'meta.forall_equation.zelus'
+  'forall_index'                : 'meta.forall_index.zelus'
+  'eq_equation'                 : 'meta.eq_equation.zelus'
+  'period_equation'             : 'meta.period_equation.zelus'
+  'der_equation'                : 'meta.der_equation.zelus'
+  'next_equation'               : 'meta.next_equation.zelus'
+  'init_equation'               : 'meta.init_equation.zelus'
+  'emit_equation'               : 'meta.emit_equation.zelus'
+  'last_equation'               : 'meta.last_equation.zelus'
+  'do_done_block'               : 'meta.do_done_block.zelus'
+  'block_equation'              : 'meta.block_equation.zelus'
+  'block_expression'            : 'meta.block_expression.zelus'
+  'block_optional_equation'     : 'meta.block_optional_equation.zelus'
+  'automaton_handler_equation'  : 'meta.automaton_handler_equation'
+  'automaton_handler_expression': 'meta.automaton_handler_expression'
+  'match_handler_equation'      : 'meta.match_handler_equation'
+  'match_handler_expression'    : 'meta.match_handler_expression'
+  'present_handler_equation'    : 'meta.present_handler_equation'
+  'present_handler_expression'  : 'meta.present_handler_expression'
+  'der_reset_handler'           : 'meta.der_reset_handler'
+  'let_declaration'             : 'meta.let_declaration.zelus'
+  'fun_declaration'             : 'meta.fun_declaration.zelus'
+  'val_declaration'             : 'meta.val_declaration.zelus'
 
-  "let_list"   : "meta.let_list.zelus"
-  "local_list" : "meta.local_list.zelus"
+  'pattern': 'meta.pattern.zelus'
 
-  "der_equation > identifier:nth-child(1)"    : "entity.name.function.zelus"
-  "let_equation > identifier:nth-child(1)"    : "entity.name.function.zelus"
-  "eq_equation > identifier:nth-child(1)"     : "entity.name.function.zelus"
-  "init_equation > identifier:nth-child(1)"   : "entity.name.function.zelus"
-  "emit_equation > identifier:nth-child(1)"   : "entity.name.function.zelus"
-  "period_equation > identifier:nth-child(1)" : "entity.name.function.zelus"
-  "let_declaration > identifier:nth-child(1)" : "entity.name.function.zelus"
-  "val_declaration > identifier:nth-child(1)" : "entity.name.function.zelus"
+  'one_local': 'meta.one_local.zelus'
+  'one_let'  : 'meta.one_let.zelus'
 
-  "eq_equation > pattern > identifier" : "entity.name.function.zelus"
+  'one_local > identifier'                          : 'entity.name.function.zelus'
+  'update_expression > identifier:nth-child(1)'     : 'entity.name.function.zelus'
+  'last_expression > identifier:nth-child(1)'       : 'entity.name.function.zelus'
+  'every_expression > identifier:nth-child(1)'      : 'entity.name.function.zelus'
+  'if_expression > identifier:nth-child(1)'         : 'entity.name.function.zelus'
+  'label_expr > identifier:nth-child(0)'            : 'entity.name.function.zelus'
+  'der_equation > identifier:nth-child(1)'          : 'entity.name.function.zelus'
+  'init_equation > identifier:nth-child(1)'         : 'entity.name.function.zelus'
+  'emit_equation > identifier:nth-child(1)'         : 'entity.name.function.zelus'
+  'next_equation > identifier:nth-child(1)'         : 'entity.name.function.zelus'
+  'last_equation > identifier:nth-child(1)'         : 'entity.name.function.zelus'
+  'forall_index > identifier:nth-child(0)'          : 'entity.name.function.zelus'
+  'match_expression > identifier:nth-child(1)'      : 'entity.name.function.zelus'
+  'match_equation > identifier:nth-child(1)'        : 'entity.name.function.zelus'
+  'let_declaration > identifier:nth-child(1)'       : 'entity.name.function.zelus'
+  'val_declaration > identifier:nth-child(1)'       : 'entity.name.function.zelus'
+
+  'val_declaration > arrow' : 'entity.name.type.variant.zelus'
+
+  'present_handler_equation > identifier:nth-child(0)':
+      'entity.name.function.zelus'
+  'present_handler_expression > identifier:nth-child(0)':
+      'entity.name.function.zelus'
+  'record_access_expression > identifier:nth-child(0)':
+      'entity.name.variable.zelus'
+  'der_reset_handler > identifier:nth-child(0)':
+      'entity.name.function.zelus'
+
+  # Ugly hack because atom do not support 'pattern identifier' selector, a
+  # selector that should select any descendent of pattern of type identifier.
+  # The only selector available for now is > which only goes down by 1 lvl
+  # in the hierarchy. For now the tuples nested more than 4 times won't be
+  # highlighted
+  '''   eq_equation > pattern:nth-child(0) > identifier
+      , eq_equation > pattern:nth-child(0) > pattern > identifier
+      , eq_equation > pattern:nth-child(0) > pattern > pattern > identifier
+      , eq_equation > pattern:nth-child(0) > pattern > pattern > pattern >
+        identifier
+      , eq_equation > pattern:nth-child(0) > pattern > pattern > pattern >
+        pattern > identifier
+  ''' : "entity.name.function.zelus"
+  '''   match_handler_equation > pattern:nth-child(0) > identifier
+      , match_handler_equation > pattern:nth-child(0) > pattern > identifier
+      , match_handler_equation > pattern:nth-child(0) > pattern > pattern >
+        identifier
+      , match_handler_equation > pattern:nth-child(0) > pattern > pattern >
+        pattern > identifier
+      , match_handler_equation > pattern:nth-child(0) > pattern > pattern >
+        pattern > pattern > identifier
+  ''' : "entity.name.function.zelus"
+  '''   match_handler_expression > pattern:nth-child(0) > identifier
+      , match_handler_expression > pattern:nth-child(0) > pattern > identifier
+      , match_handler_expression > pattern:nth-child(0) > pattern > pattern >
+        identifier
+      , match_handler_expression > pattern:nth-child(0) > pattern > pattern >
+        pattern > identifier
+      , match_handler_expression > pattern:nth-child(0) > pattern > pattern >
+        pattern > pattern > identifier
+  ''' : "entity.name.function.zelus"
+  '''   period_equation > pattern:nth-child(1) > identifier
+      , period_equation > pattern:nth-child(1) > pattern > identifier
+      , period_equation > pattern:nth-child(1) > pattern > pattern > identifier
+      , period_equation > pattern:nth-child(1) > pattern > pattern > pattern >
+        identifier
+      , period_equation > pattern:nth-child(1) > pattern > pattern > pattern >
+        pattern > identifier
+  ''' : "entity.name.function.zelus"
+  # end of ugly hack
 
   'prfx'     : 'support.function.zelus'
   'infx'     : 'support.function.zelus'
@@ -196,6 +308,7 @@ scopes:
   '"on"'         : 'keyword.control.zelus'
   '"as"'         : 'keyword.control.zelus'
   '"of"'         : 'keyword.control.zelus'
+  '"before"'     : 'keyword.control.zelus'
   '"and"'        : 'keyword.control.zelus'
   '"static"'     : 'keyword.control.zelus'
   '"atomic"'     : 'keyword.control.zelus'

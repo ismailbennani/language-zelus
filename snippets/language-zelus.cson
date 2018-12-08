@@ -68,109 +68,225 @@
     'Expression: if then, else':
         'prefix': 'eif'
         'body'  : """
-        if ${1:true} then
-          ${2:expression}
-        else
-          ${3:expression}
+if ${1:true} then
+    ${2:expression}
+else
+    ${3:expression}
         """
 
-    'Expression: present else':
-        'prefix': 'epresente'
+    'Expression: reset every':
+        'prefix': 'ereset'
         'body'  : """
-          present ${1:signal} ->
-            ${2:expression}
-          else ${2:expression}
-        """
-
-    'Expression: present init':
-        'prefix': 'epresenti'
-        'body'  : """
-          present ${1:signal} ->
-            ${2:expression}
-          init ${3:expression}
+reset
+    ${1:expression}
+every ${2:expression}
         """
 
     'Expression: present':
         'prefix': 'epresent'
         'body'  : """
-          present ${1:signal} ->
-            ${2:expression}
+present ${1:signal} ->
+    ${2:expression}
+        """
+
+    'Expression: present else':
+        'prefix': 'epresente_else'
+        'body'  : """
+present ${1:signal} ->
+    ${2:expression}
+else ${3:expression}
+        """
+
+    'Expression: present init':
+        'prefix': 'epresent_init'
+        'body'  : """
+present ${1:signal} ->
+    ${2:expression}
+init ${3:expression}
         """
 
     'Expression: match with':
         'prefix': 'ematch'
         'body'  : """
-          match ${1:expression} with
-          | ${2:pattern} ->
-              ${3:expression}
-          end
+match ${1:expression} with
+| ${2:pattern} ->
+    ${3:expression}
+end
         """
 
     'Expression: automaton':
         'prefix': 'eautomaton'
         'body'  : """
-          automaton
-          | ${1:state} ->
-              do
-                ${2:expression}
-              done
+automaton
+| ${1:state} ->
+    do
+        ${2:expression}
+    done
         """
 
     # ================================
     # EQUATIONS
     # ================================
 
+    'Equation: der':
+        'prefix': 'der'
+        'body'  : 'der ${1:variable} = ${2:expression}'
+
+    'Equation: der, init':
+        'prefix': 'der_init'
+        'body'  : 'der ${1:variable} = ${2:expression} init ${3:expression}'
+
+    'Equation: der, init, reset':
+        'prefix': 'der_init_reset'
+        'body'  : """
+der ${1:variable} = ${2:expression} init ${3:expression}
+    reset ${4:signal} -> ${5:expression}
+        """
+
     'Equation: if then':
         'prefix': 'if'
         'body'  : """
-        if ${1:true} then
-          ${2:equation}
+if ${1:true} then do
+  ${2:equation}
+done
         """
 
     'Equation: if then, else':
         'prefix': 'if'
         'body'  : """
-        if ${1:true} then
-          ${2:equation}
-        else
-          ${3:equation}
+if ${1:true} then do
+  ${2:equation}
+done else do
+  ${3:equation}
+done
         """
 
     'Equation: present':
-        'prefix': 'epresent'
+        'prefix': 'present'
         'body'  : """
-          present ${1:signal} ->
-            ${2:equation}
-          end
+present ${1:signal} -> do
+    ${2:equation}
+done
         """
 
     'Equation: present, else':
-        'prefix': 'epresent'
+        'prefix': 'present_else'
         'body'  : """
-          present ${1:signal} ->
-            ${2:equation}
-          else ${3:equation}
-          end
+present ${1:signal} -> do
+    ${2:equation}
+done else do
+    ${3:equation}
+done
         """
 
     'Equation: match with':
-        'prefix': 'ematch'
+        'prefix': 'match'
         'body'  : """
-          match ${1:expression} with
-          | ${2:pattern} ->
-              ${3:equation}
-          end
+match ${1:expression} with
+| ${2:pattern} ->
+    do
+        ${3:equation}
+    done
+end
         """
 
     'Equation: automaton':
         'prefix': 'automaton'
         'body'  : """
-          automaton
-          | ${1:state} ->
-              do
-                ${2:equation}
-              done
-          end
+automaton
+| ${1:state} ->
+    ${2:automaton_case}
+end
+        """
+
+    'Equation: automaton case':
+        'prefix': 'automaton_case'
+        'body'  : """
+do
+    ${1:equation}
+done
+        """
+
+    'Equation: automaton case until':
+        'prefix': 'automaton_case_until'
+        'body'  : """
+do
+    ${1:equation}
+until
+    ${2:condition} then ${3:state}
+        """
+
+    'Equation: automaton case unless':
+        'prefix': 'automaton_case_unless'
+        'body'  : """
+do
+    ${1:equation}
+until
+    ${2:condition} then ${3:state}
+        """
+
+    'Equation: forall':
+        'prefix': 'forall'
+        'body'  : """
+forall ${1:variable} in ${2:expression}
+do
+    ${3:equation}
+done
+        """
+
+    'Equation: forall, initialize':
+        'prefix': 'foralli'
+        'body'  : """
+forall ${1:variable} in ${2:expression}
+do
+	 ${3:equation}
+initialize
+    last ${4:variable} = ${5:expression}
+done
+        """
+
+    'Equation: reset, every':
+        'prefix': 'reset'
+        'body'  : """
+reset
+    ${1:equation}
+every ${2:expression}
+        """
+
+    'Equation: do, done':
+        'prefix': 'do'
+        'body'  : """
+do
+    ${1:equation}
+done
+        """
+
+    'Equation: local, do, done':
+        'prefix': 'local_do'
+        'body'  : """
+local ${1:variable} in
+do
+    ${2:equation}
+done
+        """
+
+    'Equation: let, local, do, done':
+        'prefix': 'let_local_do'
+        'body'  : """
+let ${1:variable} = ${2:expression} in
+local ${3:variable} in
+do
+    ${4:equation}
+done
+        """
+
+    'Equation: let, do, done':
+        'prefix': 'let_do'
+        'body'  : """
+let ${1:variable} = ${2:expression} in
+do
+    ${3:equation}
+done
         """
 
     # ================================
