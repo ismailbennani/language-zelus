@@ -1,0 +1,5 @@
+'.source.zelus':
+  'editor':
+    'commentStart': '(* '
+    'commentEnd'  : ' *)'
+    'tabLength'   : 4

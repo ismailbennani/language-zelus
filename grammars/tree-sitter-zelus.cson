@@ -1,5 +1,5 @@
 name: 'Zelus'
-scopeName: 'zelus'
+scopeName: 'source.zelus'
 type: 'tree-sitter'
 parser: 'tree-sitter-zelus'
 fileTypes: ["zls", "zli"]
