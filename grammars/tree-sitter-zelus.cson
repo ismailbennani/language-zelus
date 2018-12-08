@@ -27,85 +27,85 @@ folds: [
   }
   {
     type: 'if_expression',
-    start: {type: 'kwd_then'},
+    start: {type: '"then"'},
     end: {type: 'else_expression'}
   }
   {
     type: 'else_expression',
-    start: {type: 'kwd_else'},
+    start: {type: '"else"'},
   }
   {
     type: 'let_expression',
-    start: {type: 'kwd_let'},
-    end: {type: 'kwd_in'}
+    start: {type: '"="'},
+    end: {type: '"in"'}
   }
   {
     type: 'reset_expression',
-    start: {type: 'kwd_reset'},
-    end: {type: 'kwd_every'}
+    start: {type: '"reset"'},
+    end: {type: '"every"'}
   }
   {
     type: 'automaton_expression',
-    start: {type: 'kwd_automaton'},
-    end: {type: 'kwd_init'}
+    start: {type: '"automaton"'},
+    end: {type: '"init"'}
   }
   {
     type: 'match_expression',
-    start: {type: 'kwd_match'},
-    end: {type: 'kwd_end'}
+    start: {type: '"with"'},
+    end: {type: '"end"'}
   }
   {
     type: 'present_expression',
-    start: {type: 'kwd_present'},
-    end: {type: ['kwd_else', 'kwd_end']}
+    start: {type: '"->"'},
+    end: {type: ['"else"', '"end"']}
   }
   {
     type: 'forall_equation',
-    start: {type: 'kwd_forall'},
-    end: {type: 'kwd_done'}
+    start: {type: '"do"'},
+    end: {type: '"done"'}
   }
   {
     type: 'automaton_equation',
-    start: {type: 'kwd_automaton'},
-    end: {type: ['kwd_init', 'kwd_end']}
+    start: {type: '"automaton"'},
+    end: {type: ['"init"', '"end"']}
   }
   {
     type: 'match_equation',
-    start: {type: 'kwd_match'},
-    end: {type: 'kwd_end'}
+    start: {type: '"match"'},
+    end: {type: '"end"'}
   }
   {
     type: 'present_equation',
-    start: {type: 'kwd_present'},
-    end: {type: ['kwd_else', 'kwd_end']}
+    start: {type: '"->"'},
+    end: {type: ['"else"', '"end"']}
   }
   {
     type: 'if_equation',
-    start: {type: 'kwd_then'},
+    start: {type: '"then"'},
     end: {type: 'else_equation'}
   }
   {
     type: 'else_equation',
-    start: {type: 'kwd_else'},
+    start: {type: '"else"'},
   }
   {
     type: 'reset_equation',
-    start: {type: 'kwd_reset'},
-    end: {type: 'kwd_every'}
+    start: {type: '"reset"'},
+    end: {type: '"every"'}
   }
   {
-    start: {type: 'kwd_do'},
-    end: {type: ['kwd_done', 'kwd_then', 'kwd_continue', 'kwd_in']}
+    start: {type: '"do"'},
+    end: {type: ['"done"', '"then"', '"continue"', '"in"']}
   }
   {
     type: 'local_list',
-    start: {type: 'kwd_local'},
-    end: {type: 'kwd_in'}
+    start: {type: '"local"'},
+    end: {type: '"in"'}
   }
   {
     type: 'let_list',
-    start: {type: 'kwd_let'},
-    end: {type: 'kwd_in'}
+    start: {type: '"="'},
+    end: {type: '"in"'}
   }
 ]
 
@@ -114,59 +114,88 @@ scopes:
 
   'integer': 'constant.numeric.zelus'
   'float'  : 'constant.numeric.zelus'
-  'string' : 'constant.zelus'
-  'char'   : 'constant.character.zelus'
+  'string' : 'string.quoted.double.zelus'
+  'char'   : 'string.quoted.single.zelus'
   'bool'   : 'constant.language.boolean.zelus'
 
-  'kind': 'constant.language.kind.zelus'
-  'arrow': 'storage.type'
+  'kind': 'keyword.control.zelus'
+  'arrow': 'meta.arrow.zelus'
 
-  'constructor': 'entity.other.inherited-class.zelus'
-  'type_var'   : 'entity.name.tag.zelus'
-  'identifier' : 'variable.other.zelus'
+  'constructor': 'entity.name.type.variant.zelus'
+  'type_var'   : 'storage.type.zelus'
+  'identifier' : 'zelus'
   'fun_name'   : 'entity.name.function.zelus'
-  'ty_name'   : 'entity.name.type.zelus'
+  'ty_name'    : 'storage.type.zelus'
 
-  'prfx'     : 'keyword.operator.prefix.zelus'
-  'infx'     : 'keyword.operator.infix.zelus'
-  'kwd_next' : 'keyword.operator.prefix.zelus'
-  'kwd_last' : 'keyword.operator.prefix.zelus'
-  'kwd_emit' : 'keyword.operator.prefix.zelus'
-  'kwd_up'   : 'keyword.operator.prefix.zelus'
+  "present_expression"  : "meta.present_expression.zelus"
+  "match_expression"    : "meta.match_expression.zelus"
+  "automaton_expression": "meta.automaton_expression.zelus"
+  "reset_expression"    : "meta.reset_expression.zelus"
+  "let_expression"      : "meta.let_expression.zelus"
+  "else_expression"     : "meta.else_expression.zelus"
+  "if_expression"       : "meta.if_expression.zelus"
+  "do_equation"         : "meta.do_equation.zelus"
+  "reset_equation"      : "meta.reset_equation.zelus"
+  "present_equation"    : "meta.present_equation.zelus"
+  "else_equation"       : "meta.else_equation.zelus"
+  "if_equation"         : "meta.if_equation.zelus"
+  "match_equation"      : "meta.match_equation.zelus"
+  "automaton_equation"  : "meta.automaton_equation.zelus"
+  "forall_equation"     : "meta.forall_equation.zelus"
+  "eq_equation"         : "meta.eq_equation.zelus"
+  "period_equation"     : "meta.period_equation.zelus"
+  "der_equation"        : "meta.der_equation.zelus"
+  "next_equation"       : "meta.next_equation.zelus"
+  "init_equation"       : "meta.init_equation.zelus"
+  "emit_equation"       : "meta.emit_equation.zelus"
 
-  'kwd_open'       : 'keyword.control'
-  'kwd_type'       : 'keyword.control'
-  'kwd_val'        : 'keyword.control'
-  'kwd_let'        : 'keyword.control'
-  'kwd_rec'        : 'keyword.control'
-  'kwd_in'         : 'keyword.control'
-  'kwd_out'         : 'keyword.control'
-  'kwd_on'         : 'keyword.control'
-  'kwd_as'         : 'keyword.control'
-  'kwd_of'         : 'keyword.control'
-  'kwd_and'        : 'keyword.control'
-  'kwd_static'     : 'keyword.control'
-  'kwd_atomic'     : 'keyword.control'
-  'kwd_where'      : 'keyword.control'
-  'kwd_der'        : 'keyword.control'
-  'kwd_init'       : 'keyword.control'
-  'kwd_default'    : 'keyword.control'
-  'kwd_reset'      : 'keyword.control'
-  'kwd_every'      : 'keyword.control'
-  'kwd_present'    : 'keyword.control'
-  'kwd_period'     : 'keyword.control'
-  'kwd_local'      : 'keyword.control'
-  'kwd_do'         : 'keyword.control'
-  'kwd_done'       : 'keyword.control'
-  'kwd_forall'     : 'keyword.control'
-  'kwd_initialize' : 'keyword.control'
-  'kwd_match'      : 'keyword.control'
-  'kwd_with'       : 'keyword.control'
-  'kwd_end'        : 'keyword.control'
-  'kwd_automaton'  : 'keyword.control'
-  'kwd_then'       : 'keyword.control'
-  'kwd_continue'   : 'keyword.control'
-  'kwd_until'      : 'keyword.control'
-  'kwd_unless'     : 'keyword.control'
-  'kwd_if'         : 'keyword.control'
-  'kwd_else'       : 'keyword.control'
+  "der_equation > identifier:nth-child(0)"    : "entity.name.function.zelus"
+  "let_equation > identifier:nth-child(0)"    : "entity.name.function.zelus"
+  "eq_equation > identifier:nth-child(0)"     : "entity.name.function.zelus"
+  "init_equation > identifier:nth-child(0)"   : "entity.name.function.zelus"
+  "emit_equation > identifier:nth-child(0)"   : "entity.name.function.zelus"
+  "period_equation > identifier:nth-child(0)" : "entity.name.function.zelus"
+
+  'prfx'     : 'support.function.zelus'
+  'infx'     : 'support.function.zelus'
+  '"next"'   : 'support.function.zelus'
+  '"last"'   : 'support.function.zelus'
+  '"emit"'   : 'support.function.zelus'
+  '"up"'     : 'support.function.zelus'
+
+  '"open"'       : 'keyword.control'
+  '"type"'       : 'keyword.control'
+  '"val"'        : 'keyword.control'
+  '"let"'        : 'keyword.control'
+  '"rec"'        : 'keyword.control'
+  '"in"'         : 'keyword.control'
+  '"out"'        : 'keyword.control'
+  '"on"'         : 'keyword.control'
+  '"as"'         : 'keyword.control'
+  '"of"'         : 'keyword.control'
+  '"and"'        : 'keyword.control'
+  '"static"'     : 'keyword.control'
+  '"atomic"'     : 'keyword.control'
+  '"where"'      : 'keyword.control'
+  '"der"'        : 'keyword.control'
+  '"init"'       : 'keyword.control'
+  '"default"'    : 'keyword.control'
+  '"reset"'      : 'keyword.control'
+  '"every"'      : 'keyword.control'
+  '"present"'    : 'keyword.control'
+  '"period"'     : 'keyword.control'
+  '"local"'      : 'keyword.control'
+  '"do"'         : 'keyword.control'
+  '"done"'       : 'keyword.control'
+  '"forall"'     : 'keyword.control'
+  '"initialize"' : 'keyword.control'
+  '"match"'      : 'keyword.control'
+  '"with"'       : 'keyword.control'
+  '"end"'        : 'keyword.control'
+  '"automaton"'  : 'keyword.control'
+  '"then"'       : 'keyword.control'
+  '"continue"'   : 'keyword.control'
+  '"until"'      : 'keyword.control'
+  '"unless"'     : 'keyword.control'
+  '"if"'         : 'keyword.control'
+  '"else"'       : 'keyword.control'
