@@ -94,8 +94,20 @@ folds: [
     end: {type: '"every"'}
   }
   {
+    type: 'let_declaration',
+    start: {type: '"="'},
+  }
+  {
+    type: 'fun_declaration',
+    start: {type: ['"where"', '"="']},
+  }
+  {
     start: {type: '"do"'},
-    end: {type: ['"done"', '"then"', '"continue"', '"in"']}
+    end: {type: ['"done"', '"then"', '"continue"', '"in"', '"until"', '"unless"']}
+  }
+  {
+    start: {type: ['"until"', '"unless"', '"else"']},
+    end: {type: ['"then"', '"continue"']}
   }
   {
     type: 'local_list',
@@ -115,6 +127,7 @@ scopes:
   'integer': 'constant.numeric.zelus'
   'float'  : 'constant.numeric.zelus'
   'string' : 'string.quoted.double.zelus'
+  'string > escaped_sequence': 'string.quoted.other.zelus'
   'char'   : 'string.quoted.single.zelus'
   'bool'   : 'constant.language.boolean.zelus'
 
@@ -123,7 +136,7 @@ scopes:
 
   'constructor': 'entity.name.type.variant.zelus'
   'type_var'   : 'storage.type.zelus'
-  'identifier' : 'zelus'
+  'identifier' : 'meta.identifier.zelus'
   'fun_name'   : 'entity.name.function.zelus'
   'ty_name'    : 'storage.type.zelus'
 
@@ -148,54 +161,62 @@ scopes:
   "next_equation"       : "meta.next_equation.zelus"
   "init_equation"       : "meta.init_equation.zelus"
   "emit_equation"       : "meta.emit_equation.zelus"
+  "let_declaration"     : "meta.let_declaration.zelus"
+  "fun_declaration"     : "meta.fun_declaration.zelus"
 
-  "der_equation > identifier:nth-child(0)"    : "entity.name.function.zelus"
-  "let_equation > identifier:nth-child(0)"    : "entity.name.function.zelus"
-  "eq_equation > identifier:nth-child(0)"     : "entity.name.function.zelus"
-  "init_equation > identifier:nth-child(0)"   : "entity.name.function.zelus"
-  "emit_equation > identifier:nth-child(0)"   : "entity.name.function.zelus"
-  "period_equation > identifier:nth-child(0)" : "entity.name.function.zelus"
+  "let_list"   : "meta.let_list.zelus"
+  "local_list" : "meta.local_list.zelus"
+
+  "der_equation > identifier:nth-child(1)"    : "entity.name.function.zelus"
+  "let_equation > identifier:nth-child(1)"    : "entity.name.function.zelus"
+  "eq_equation > identifier:nth-child(1)"     : "entity.name.function.zelus"
+  "init_equation > identifier:nth-child(1)"   : "entity.name.function.zelus"
+  "emit_equation > identifier:nth-child(1)"   : "entity.name.function.zelus"
+  "period_equation > identifier:nth-child(1)" : "entity.name.function.zelus"
+  "let_declaration > identifier:nth-child(1)" : "entity.name.function.zelus"
+
+  "eq_equation > pattern > identifier" : "entity.name.function.zelus"
 
   'prfx'     : 'support.function.zelus'
   'infx'     : 'support.function.zelus'
-  '"next"'   : 'support.function.zelus'
-  '"last"'   : 'support.function.zelus'
-  '"emit"'   : 'support.function.zelus'
-  '"up"'     : 'support.function.zelus'
+  '"next"'   : 'keyword.control.zelus'
+  '"last"'   : 'keyword.control.zelus'
+  '"emit"'   : 'keyword.control.zelus'
+  '"up"'     : 'keyword.control.zelus'
 
-  '"open"'       : 'keyword.control'
-  '"type"'       : 'keyword.control'
-  '"val"'        : 'keyword.control'
-  '"let"'        : 'keyword.control'
-  '"rec"'        : 'keyword.control'
-  '"in"'         : 'keyword.control'
-  '"out"'        : 'keyword.control'
-  '"on"'         : 'keyword.control'
-  '"as"'         : 'keyword.control'
-  '"of"'         : 'keyword.control'
-  '"and"'        : 'keyword.control'
-  '"static"'     : 'keyword.control'
-  '"atomic"'     : 'keyword.control'
-  '"where"'      : 'keyword.control'
-  '"der"'        : 'keyword.control'
-  '"init"'       : 'keyword.control'
-  '"default"'    : 'keyword.control'
-  '"reset"'      : 'keyword.control'
-  '"every"'      : 'keyword.control'
-  '"present"'    : 'keyword.control'
-  '"period"'     : 'keyword.control'
-  '"local"'      : 'keyword.control'
-  '"do"'         : 'keyword.control'
-  '"done"'       : 'keyword.control'
-  '"forall"'     : 'keyword.control'
-  '"initialize"' : 'keyword.control'
-  '"match"'      : 'keyword.control'
-  '"with"'       : 'keyword.control'
-  '"end"'        : 'keyword.control'
-  '"automaton"'  : 'keyword.control'
-  '"then"'       : 'keyword.control'
-  '"continue"'   : 'keyword.control'
-  '"until"'      : 'keyword.control'
-  '"unless"'     : 'keyword.control'
-  '"if"'         : 'keyword.control'
-  '"else"'       : 'keyword.control'
+  '"open"'       : 'keyword.control.zelus'
+  '"type"'       : 'keyword.control.zelus'
+  '"val"'        : 'keyword.control.zelus'
+  '"let"'        : 'keyword.control.zelus'
+  '"rec"'        : 'keyword.control.zelus'
+  '"in"'         : 'keyword.control.zelus'
+  '"out"'        : 'keyword.control.zelus'
+  '"on"'         : 'keyword.control.zelus'
+  '"as"'         : 'keyword.control.zelus'
+  '"of"'         : 'keyword.control.zelus'
+  '"and"'        : 'keyword.control.zelus'
+  '"static"'     : 'keyword.control.zelus'
+  '"atomic"'     : 'keyword.control.zelus'
+  '"where"'      : 'keyword.control.zelus'
+  '"der"'        : 'keyword.control.zelus'
+  '"init"'       : 'keyword.control.zelus'
+  '"default"'    : 'keyword.control.zelus'
+  '"reset"'      : 'keyword.control.zelus'
+  '"every"'      : 'keyword.control.zelus'
+  '"present"'    : 'keyword.control.zelus'
+  '"period"'     : 'keyword.control.zelus'
+  '"local"'      : 'keyword.control.zelus'
+  '"do"'         : 'keyword.control.zelus'
+  '"done"'       : 'keyword.control.zelus'
+  '"forall"'     : 'keyword.control.zelus'
+  '"initialize"' : 'keyword.control.zelus'
+  '"match"'      : 'keyword.control.zelus'
+  '"with"'       : 'keyword.control.zelus'
+  '"end"'        : 'keyword.control.zelus'
+  '"automaton"'  : 'keyword.control.zelus'
+  '"then"'       : 'keyword.control.zelus'
+  '"continue"'   : 'keyword.control.zelus'
+  '"until"'      : 'keyword.control.zelus'
+  '"unless"'     : 'keyword.control.zelus'
+  '"if"'         : 'keyword.control.zelus'
+  '"else"'       : 'keyword.control.zelus'
