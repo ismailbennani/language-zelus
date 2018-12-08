@@ -163,6 +163,7 @@ scopes:
   "emit_equation"       : "meta.emit_equation.zelus"
   "let_declaration"     : "meta.let_declaration.zelus"
   "fun_declaration"     : "meta.fun_declaration.zelus"
+  "val_declaration"     : "meta.val_declaration.zelus"
 
   "let_list"   : "meta.let_list.zelus"
   "local_list" : "meta.local_list.zelus"
@@ -174,6 +175,7 @@ scopes:
   "emit_equation > identifier:nth-child(1)"   : "entity.name.function.zelus"
   "period_equation > identifier:nth-child(1)" : "entity.name.function.zelus"
   "let_declaration > identifier:nth-child(1)" : "entity.name.function.zelus"
+  "val_declaration > identifier:nth-child(1)" : "entity.name.function.zelus"
 
   "eq_equation > pattern > identifier" : "entity.name.function.zelus"
 

@@ -1,0 +1,222 @@
+'.zelus':
+
+    # ================================
+    # UTILS
+    # ================================
+
+    'Plot':
+        'prefix': 'plot'
+        'body'  : """
+          present (period(0.1)) ->
+              let s = scope(${1:ymin}, ${2:ymax}, (${3:label}, linear, ${4:signal})) in
+              window(${5:title}, ${6:tmax}, t, s)
+        """
+
+    # ================================
+    # SCOPES
+    # ================================
+
+    'Scope':
+        'prefix': 'scope'
+        'body': 'scope(${1:ymin}, ${2:ymax}, (${3:label}, linear, ${4:signal}))'
+
+    'Scope 2':
+        'prefix': 'scope2'
+        'body': """scope2(${1:ymin}, ${2:ymax}, (${3:label}, linear, ${4:signal}),
+                                                (${5:label}, linear, ${6:signal}))
+                """
+
+    'Scope 3':
+        'prefix': 'scope3'
+        'body': """scope3(${1:ymin}, ${2:ymax}, (${3:label}, linear, ${4:signal}),
+                                                (${5:label}, linear, ${6:signal}))
+                                                (${7:label}, linear, ${8:signal}))
+                """
+
+    'Scope 4':
+        'prefix': 'scope4'
+        'body': """scope4(${1:ymin}, ${2:ymax}, (${3:label}, linear, ${4:signal}),
+                                                (${5:label}, linear, ${6:signal}))
+                                                (${7:label}, linear, ${8:signal}))
+                                                (${9:label}, linear, ${10:signal}))
+                """
+
+    # ================================
+    # WINDOW
+    # ================================
+
+    'Window':
+        'prefix': 'window'
+        'body'  : 'window(${1:title}, ${2:tmax}, ${3:time}, ${4:scope})'
+
+    'Window 2':
+        'prefix': 'window2'
+        'body'  : 'window2(${1:title}, ${2:tmax}, ${3:time}, ${4:scope}, ${5:scope})'
+
+    'Window 3':
+        'prefix': 'window3'
+        'body'  : 'window3(${1:title}, ${2:tmax}, ${3:time}, ${4:scope}, ${5:scope}, ${6:scope})'
+
+    'Window 4':
+        'prefix': 'window4'
+        'body'  : 'window4(${1:title}, ${2:tmax}, ${3:time}, ${4:scope}, ${5:scope}, ${6:scope}, ${7:scope})'
+
+    # ================================
+    # EXPRESSIONS
+    # ================================
+
+    'Expression: if then, else':
+        'prefix': 'eif'
+        'body'  : """
+        if ${1:true} then
+          ${2:expression}
+        else
+          ${3:expression}
+        """
+
+    'Expression: present else':
+        'prefix': 'epresente'
+        'body'  : """
+          present ${1:signal} ->
+            ${2:expression}
+          else ${2:expression}
+        """
+
+    'Expression: present init':
+        'prefix': 'epresenti'
+        'body'  : """
+          present ${1:signal} ->
+            ${2:expression}
+          init ${3:expression}
+        """
+
+    'Expression: present':
+        'prefix': 'epresent'
+        'body'  : """
+          present ${1:signal} ->
+            ${2:expression}
+        """
+
+    'Expression: match with':
+        'prefix': 'ematch'
+        'body'  : """
+          match ${1:expression} with
+          | ${2:pattern} ->
+              ${3:expression}
+          end
+        """
+
+    'Expression: automaton':
+        'prefix': 'eautomaton'
+        'body'  : """
+          automaton
+          | ${1:state} ->
+              do
+                ${2:expression}
+              done
+        """
+
+    # ================================
+    # EQUATIONS
+    # ================================
+
+    'Equation: if then':
+        'prefix': 'if'
+        'body'  : """
+        if ${1:true} then
+          ${2:equation}
+        """
+
+    'Equation: if then, else':
+        'prefix': 'if'
+        'body'  : """
+        if ${1:true} then
+          ${2:equation}
+        else
+          ${3:equation}
+        """
+
+    'Equation: present':
+        'prefix': 'epresent'
+        'body'  : """
+          present ${1:signal} ->
+            ${2:equation}
+          end
+        """
+
+    'Equation: present, else':
+        'prefix': 'epresent'
+        'body'  : """
+          present ${1:signal} ->
+            ${2:equation}
+          else ${3:equation}
+          end
+        """
+
+    'Equation: match with':
+        'prefix': 'ematch'
+        'body'  : """
+          match ${1:expression} with
+          | ${2:pattern} ->
+              ${3:equation}
+          end
+        """
+
+    'Equation: automaton':
+        'prefix': 'automaton'
+        'body'  : """
+          automaton
+          | ${1:state} ->
+              do
+                ${2:equation}
+              done
+          end
+        """
+
+    # ================================
+    # IMPLEMENTATION
+    # ================================
+
+    'Implementation: type':
+        'prefix': 'type'
+        'body'  : 'type ${1:name} = ${2:ty_decl}'
+
+    'Implementation: let static':
+        'prefix': 'static'
+        'body'  : 'let static ${1:name} = ${2:expr}'
+
+    'Implementation: let':
+        'prefix': 'ilet'
+        'body'  : 'let ${1:name} = ${2:expr}'
+
+    'Implementation: node':
+        'prefix': 'node'
+        'body'  : 'let node ${1:name}(${2:args}) = ${3:expr}'
+
+    'Implementation: node where':
+        'prefix': 'nodew'
+        'body'  : 'let node ${1:name}(${2:args}) = ${3:expr} where ${4:equation}'
+
+    'Implementation: hybrid':
+        'prefix': 'hybrid'
+        'body'  : 'let hybrid ${1:name}(${2:args}) = ${3:expr}'
+
+    'Implementation: hybrid where':
+        'prefix': 'hybridw'
+        'body'  : 'let hybrid ${1:name}(${2:args}) = ${3:expr} where ${4:equation}'
+
+    'Implementation: fun':
+        'prefix': 'fun'
+        'body'  : 'let fun ${1:name}(${2:args}) = ${3:expr}'
+
+    'Implementation: fun where':
+        'prefix': 'funw'
+        'body'  : 'let fun ${1:name}(${2:args}) = ${3:expr} where ${4:equation}'
+
+    'Implementation: discrete':
+        'prefix': 'discrete'
+        'body'  : 'let discrete ${1:name}(${2:args}) = ${3:expr}'
+
+    'Implementation: discrete where':
+        'prefix': 'discretew'
+        'body'  : 'let discrete ${1:name}(${2:args}) = ${3:expr} where ${4:equation}'
